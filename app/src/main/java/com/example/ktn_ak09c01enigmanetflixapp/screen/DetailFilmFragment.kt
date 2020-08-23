@@ -31,7 +31,7 @@ class DetailFilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        duration_detail.text = filmViewModel.details["duration"]
+        duration_detail.text = "Duration: ${filmViewModel.details["duration"]}"
         synopsis_detail.text = filmViewModel.details["synopsis"]
         Glide.with(this).load(filmViewModel.details["image"]).into(image_detail)
     }
