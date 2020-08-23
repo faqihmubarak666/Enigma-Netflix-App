@@ -7,50 +7,42 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FilmRepository(val filmAPI: FilmAPI) {
-    var film: MutableLiveData<List<Film>> = MutableLiveData<List<Film>>()
 
-    fun getAllFilm() {
-        filmAPI.getAllFilm().enqueue(object : Callback<WrapperResponse> {
-            override fun onResponse(
-                call: Call<WrapperResponse>,
-                response: Response<WrapperResponse>
-            ) {
-                if (response.code() == 200) {
-                    val response = response.body()
-                    val gson = Gson()
-                    val result = gson.toJson(response?.result)
-                    val filmObject = gson.fromJson<Film>(result, Film::class.java)
-                    film.value = listOf(filmObject)
-                }            }
+    var film: MutableLiveData<Film> = MutableLiveData<Film>()
+    var filmList:MutableLiveData<List<Film>> = MutableLiveData<List<Film>>()
 
-            override fun onFailure(call: Call<WrapperResponse>, t: Throwable) {
-                println("Failed Because ${t.printStackTrace()}")
-                println("Failed Because ${t.localizedMessage}")            }
+    fun getFilmById(id: String) {
+        filmAPI.getFilmById(id).enqueue(object : Callback<Film> {
+            override fun onFailure(call: Call<Film>, t: Throwable) {
+                println(t.localizedMessage)
+            }
 
+            override fun onResponse(call: Call<Film>, response: Response<Film>) {
+                val response = response.body()
+                val gson = Gson()
+                val stringResponse = gson.toJson(response)
+                val movieObject = gson.fromJson<Film>(stringResponse,
+                    Film::class.java)
+                film.value = movieObject
+            }
         })
     }
 
-    fun getFilmById(id: String) {
-        filmAPI.getFilmById(id).enqueue(object : Callback<WrapperResponse> {
-            override fun onResponse(
-                call: Call<WrapperResponse>,
-                response: Response<WrapperResponse>
-            ) {
-                if (response.code() == 200) {
-                    val response = response.body()
-                    val gson = Gson()
-                    val result = gson.toJson(response?.result)
-                    val filmObject = gson.fromJson<Film>(result, Film::class.java)
-                    film.value = listOf(filmObject)
-                }
+    fun getAllFilm(){
+        filmAPI.getAllFilm().enqueue(object : Callback<List<Film>> {
+            override fun onFailure(call: Call<List<Film>>, t: Throwable) {
+                println(t.localizedMessage)
+                println(t.printStackTrace())
             }
 
-            override fun onFailure(call: Call<WrapperResponse>, t: Throwable) {
-                println("Failed Because ${t.printStackTrace()}")
-                println("Failed Because ${t.localizedMessage}")
+            override fun onResponse(call: Call<List<Film>>, response: Response<List<Film>>) {
+                val response = response.body()
+                val gson = Gson()
+                val stringResponse = gson.toJson(response)
+                val movieObject:List<Film> = gson.fromJson(stringResponse,Array<Film>::class.java).toList()
+                filmList.value = movieObject
             }
-        }
-        )
+        })
     }
 
     fun saveFilm(film: Film) {

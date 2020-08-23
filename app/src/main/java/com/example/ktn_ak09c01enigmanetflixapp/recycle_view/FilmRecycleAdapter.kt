@@ -38,18 +38,20 @@ class FilmRecycleAdapter(private val filmList: List<Film>, val filmViewModel: Fi
 
 }
 
-class FilmViewHolder(v: View, val filmViewModel: FilmViewModel) : RecyclerView.ViewHolder(v), View.OnClickListener {
+class FilmViewHolder(v: View, val filmViewModel: FilmViewModel) : RecyclerView.ViewHolder(v),
+    View.OnClickListener {
+
     var index: String = ""
     var imageFilm: ImageView = v.findViewById(R.id.image_film)
 
     override fun onClick(v: View?) {
-        when(v) {
+        when (v) {
             itemView -> {
                 filmViewModel.getFilmById(index)
                 Toast.makeText(v.context, " your click", Toast.LENGTH_SHORT).show()
-                itemView.findNavController().navigate(R.id.action_filmFragment_to_detailFilmFragment)
+                itemView.findNavController()
+                    .navigate(R.id.action_filmFragment_to_detailFilmFragment)
             }
-
         }
     }
 }

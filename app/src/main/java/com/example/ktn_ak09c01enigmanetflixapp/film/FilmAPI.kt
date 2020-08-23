@@ -8,10 +8,10 @@ import retrofit2.http.Path
 
 interface FilmAPI {
     @GET("film")
-    fun getAllFilm(): Call<WrapperResponse>
+    fun getAllFilm(): Call<List<Film>>
 
     @GET("film/{id}")
-    fun getFilmById(@Path("id")id: String): Call<WrapperResponse>
+    fun getFilmById(@Path("id")id: String): Call<Film>
 
     @POST("film")
     fun createFilm(@Body film: Film): Call<Film>

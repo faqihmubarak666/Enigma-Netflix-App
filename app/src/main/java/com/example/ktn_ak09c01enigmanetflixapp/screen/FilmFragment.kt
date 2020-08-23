@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ktn_ak09c01enigmanetflixapp.R
 import com.example.ktn_ak09c01enigmanetflixapp.film.FilmViewModel
 import com.example.ktn_ak09c01enigmanetflixapp.recycle_view.FilmRecycleAdapter
@@ -33,11 +34,14 @@ class FilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        filmRecycleView.layoutManager = LinearLayoutManager(this.context)
+        val gridRecyclerView = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//        filmRecycleView.layoutManager = LinearLayoutManager(this.context)
+        filmRecycleView.layoutManager = gridRecyclerView
 
-        filmViewModel.film.observe(viewLifecycleOwner, Observer {
+        filmViewModel.allMovie.observe(viewLifecycleOwner, Observer {
             filmRecycleAdapter = FilmRecycleAdapter(it, filmViewModel)
             filmRecycleView.adapter = filmRecycleAdapter
         })
+        filmViewModel.getAllFilm()
     }
 }
