@@ -6,6 +6,7 @@ import com.example.ktn_ak09c01enigmanetflixapp.config.RetrofitBuilder
 
 class FilmViewModel : ViewModel() {
     val filmRepository : FilmRepository
+    val details: MutableMap<String, String> = mutableMapOf()
 
     init {
         val filmAPI = RetrofitBuilder.createRetrofit().create(FilmAPI::class.java)
@@ -21,6 +22,10 @@ class FilmViewModel : ViewModel() {
 
     fun getFilmById(id: String){
         filmRepository.getFilmById(id)
+        val film = filmRepository.filmList.value!!.get(id.toInt())
+        details.put("image", film.image)
+        details.put("duration", film.duration)
+        details.put("synopsis", film.synopsis)
     }
 
     fun saveFilm(film: Film){
