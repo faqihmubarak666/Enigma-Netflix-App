@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/showFilm"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_playlist_play_24"
+        android:title="Show"
+        />
+
+    <item
+        android:id="@+id/createFilm"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_add_to_queue_24"
+        android:title="Crate"
+        />
+
+</menu>
